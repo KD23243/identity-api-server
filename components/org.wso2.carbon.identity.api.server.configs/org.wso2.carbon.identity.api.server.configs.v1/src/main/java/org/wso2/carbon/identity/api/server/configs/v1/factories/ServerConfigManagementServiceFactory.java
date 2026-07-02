@@ -9,6 +9,7 @@ import org.wso2.carbon.identity.fraud.detection.core.service.FraudDetectionConfi
 import org.wso2.carbon.identity.oauth.dcr.DCRConfigurationMgtService;
 import org.wso2.carbon.identity.oauth2.agent.services.AgentConfigMgtService;
 import org.wso2.carbon.identity.oauth2.config.services.OAuth2OIDCConfigOrgUsageScopeMgtService;
+import org.wso2.carbon.identity.oauth2.fapi.services.FapiConfigMgtService;
 import org.wso2.carbon.identity.oauth2.impersonation.services.ImpersonationConfigMgtService;
 import org.wso2.carbon.identity.oauth2.token.handler.clientauth.jwt.core.JWTClientAuthenticatorMgtService;
 import org.wso2.carbon.idp.mgt.IdentityProviderManager;
@@ -41,6 +42,7 @@ public class ServerConfigManagementServiceFactory {
                 ConfigsServiceHolder.getOAuth2OIDCConfigOrgUsageScopeMgtService();
         CompatibilitySettingsService compatibilitySettingsService = ConfigsServiceHolder
                 .getIdentityCompatibilitySettingsService();
+        FapiConfigMgtService fapiConfigMgtService = ConfigsServiceHolder.getFapiConfigMgtService();
 
         if (applicationManagementService == null) {
             throw new IllegalStateException("ApplicationManagementService is not available from OSGi context.");
@@ -87,6 +89,10 @@ public class ServerConfigManagementServiceFactory {
             throw new IllegalStateException("CompatibilitySettingsService is not available from OSGi context.");
         }
 
+        if (fapiConfigMgtService == null) {
+            throw new IllegalStateException("FapiConfigMgtService is not available from OSGi context.");
+        }
+
         SERVICE = new ServerConfigManagementService(applicationManagementService, identityProviderManager,
                 corsManagementService,
                 remoteLoggingConfigService,
@@ -96,7 +102,8 @@ public class ServerConfigManagementServiceFactory {
                 jwtClientAuthenticatorMgtService,
                 fraudDetectionConfigsService,
                 oAuth2OIDCConfigOrgUsageScopeMgtService,
-                compatibilitySettingsService
+                compatibilitySettingsService,
+                fapiConfigMgtService
                 );
     }
 

@@ -26,6 +26,7 @@ import org.wso2.carbon.identity.api.server.configs.v1.model.ApplicationObject;
 import org.wso2.carbon.identity.api.server.configs.v1.model.CORSPatch;
 import org.wso2.carbon.identity.api.server.configs.v1.model.CompatibilitySettings;
 import org.wso2.carbon.identity.api.server.configs.v1.model.DCRPatch;
+import org.wso2.carbon.identity.api.server.configs.v1.model.FapiConfig;
 import org.wso2.carbon.identity.api.server.configs.v1.model.FraudDetectionConfig;
 import org.wso2.carbon.identity.api.server.configs.v1.model.ImpersonationPatch;
 import org.wso2.carbon.identity.api.server.configs.v1.model.InboundAuthOAuth2Config;
@@ -128,6 +129,12 @@ public class ConfigsApiServiceImpl implements ConfigsApiService {
     }
 
     @Override
+    public Response getFAPIConfiguration() {
+
+        return Response.ok().entity(configManagementService.getFAPIConfiguration()).build();
+    }
+
+    @Override
     public Response getRemoteLoggingConfig(String logType) {
 
         RemoteServerLoggerData remoteServerLoggerResponseData =
@@ -167,6 +174,12 @@ public class ConfigsApiServiceImpl implements ConfigsApiService {
 
         configManagementService.patchDCRConfig(dcrPatch);
         return Response.ok().build();
+    }
+
+    @Override
+    public Response updateFAPIConfiguration(final FapiConfig fapiConfig) {
+
+        return Response.ok().entity(configManagementService.updateFAPIConfiguration(fapiConfig)).build();
     }
 
     @Override
