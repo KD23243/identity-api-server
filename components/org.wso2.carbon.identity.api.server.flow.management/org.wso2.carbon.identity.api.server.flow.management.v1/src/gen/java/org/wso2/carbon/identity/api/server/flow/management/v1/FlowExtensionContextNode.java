@@ -19,21 +19,17 @@
 package org.wso2.carbon.identity.api.server.flow.management.v1;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
 import java.util.ArrayList;
 import java.util.List;
-import javax.validation.constraints.*;
-
-/**
- * One node in the controlled Flow Extension context tree.
- **/
-
-import io.swagger.annotations.*;
 import java.util.Objects;
+
 import javax.validation.Valid;
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlEnum;
+import javax.xml.bind.annotation.XmlEnumValue;
+import javax.xml.bind.annotation.XmlType;
 @ApiModel(description = "One node in the controlled Flow Extension context tree.")
 public class FlowExtensionContextNode  {
   
@@ -114,6 +110,7 @@ public enum AllowedOperationsEnum {
     private Boolean replaceable;
     private Boolean dynamicEntryAllowed;
     private String dynamicEntryType;
+    private Boolean multiValued;
     private List<FlowExtensionContextNode> children = null;
 
 
@@ -308,6 +305,25 @@ public enum AllowedOperationsEnum {
     }
 
     /**
+    * Whether the claim accepts multiple values. Only meaningful for claim leaves.
+    **/
+    public FlowExtensionContextNode multiValued(Boolean multiValued) {
+
+        this.multiValued = multiValued;
+        return this;
+    }
+
+    @ApiModelProperty(value = "")
+    @JsonProperty("multiValued")
+    @Valid
+    public Boolean getMultiValued() {
+        return multiValued;
+    }
+    public void setMultiValued(Boolean multiValued) {
+        this.multiValued = multiValued;
+    }
+
+    /**
     **/
     public FlowExtensionContextNode children(List<FlowExtensionContextNode> children) {
 
@@ -355,12 +371,13 @@ public enum AllowedOperationsEnum {
             Objects.equals(this.replaceable, flowExtensionContextNode.replaceable) &&
             Objects.equals(this.dynamicEntryAllowed, flowExtensionContextNode.dynamicEntryAllowed) &&
             Objects.equals(this.dynamicEntryType, flowExtensionContextNode.dynamicEntryType) &&
+            Objects.equals(this.multiValued, flowExtensionContextNode.multiValued) &&
             Objects.equals(this.children, flowExtensionContextNode.children);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(key, title, path, dataType, nodeType, allowedOperations, readOnly, replaceable, dynamicEntryAllowed, dynamicEntryType, children);
+        return Objects.hash(key, title, path, dataType, nodeType, allowedOperations, readOnly, replaceable, dynamicEntryAllowed, dynamicEntryType, multiValued, children);
     }
 
     @Override
@@ -379,6 +396,7 @@ public enum AllowedOperationsEnum {
         sb.append("    replaceable: ").append(toIndentedString(replaceable)).append("\n");
         sb.append("    dynamicEntryAllowed: ").append(toIndentedString(dynamicEntryAllowed)).append("\n");
         sb.append("    dynamicEntryType: ").append(toIndentedString(dynamicEntryType)).append("\n");
+        sb.append("    multiValued: ").append(toIndentedString(multiValued)).append("\n");
         sb.append("    children: ").append(toIndentedString(children)).append("\n");
         sb.append("}");
         return sb.toString();

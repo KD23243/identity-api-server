@@ -1257,6 +1257,9 @@ components:
         dynamicEntryType:
           type: string
           example: String
+        multiValued:
+          type: boolean
+          example: false
         children:
           type: array
           items:
